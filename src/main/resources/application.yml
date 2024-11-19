@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/citronex
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: false
+  jpa:
+    show-sql: true
+
+
