@@ -50,4 +50,9 @@ public class FarmController {
         return ResponseEntity.ok(searchedFarms);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Farmdto>> getAllFarms() {
+        return ResponseEntity.ok(farmService.getAllFarms());
+    }   
+
 }
