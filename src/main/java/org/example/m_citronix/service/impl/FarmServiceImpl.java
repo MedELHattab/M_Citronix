@@ -1,26 +1,27 @@
 package org.example.m_citronix.service.impl;
 
-
+import lombok.RequiredArgsConstructor;
 import org.example.m_citronix.dto.Farmdto;
 import org.example.m_citronix.exception.NotFoundException;
 import org.example.m_citronix.mapper.FarmMapper;
 import org.example.m_citronix.model.Farm;
 import org.example.m_citronix.repository.FarmRepository;
+import org.example.m_citronix.repository.FarmSearchRepository;
 import org.example.m_citronix.service.FarmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class FarmServiceImpl implements FarmService {
 
-    @Autowired
-    private FarmRepository farmRepository;
-
-    @Autowired
-    private FarmMapper farmMapper;
+    private final FarmRepository farmRepository;
+    private final FarmMapper farmMapper;
+    private final FarmSearchRepository farmSearchRepository;
 
     @Override
     public Farmdto createFarm(Farmdto farmDTO) {
@@ -64,7 +65,6 @@ public class FarmServiceImpl implements FarmService {
         return farmMapper.toDTO(updatedFarm);
     }
 
-
     @Override
     public void deleteFarm(Long id) {
         if (!farmRepository.existsById(id)) {
@@ -72,5 +72,16 @@ public class FarmServiceImpl implements FarmService {
         }
         farmRepository.deleteById(id);
     }
-}
 
+    @Override
+    public List<Farmdto> searchFarms(String name, String location, Double minArea, Double maxArea) {
+        List<Farm> farms = farmSearchRepository.searchFarms(name, location, minArea, maxArea);
+        if (farms.isEmpty()) {
+            throw new NotFoundException("No farms found matching the search criteria.");
+        }
+        return farms.stream()
+                .map(farmMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+}
