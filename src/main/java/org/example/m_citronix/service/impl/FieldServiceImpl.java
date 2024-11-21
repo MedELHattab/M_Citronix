@@ -26,8 +26,17 @@ public class FieldServiceImpl implements FieldService {
 
         Long FarmId = feilddto.getFarmId();
         Farm farm = farmRepository.findById(FarmId).orElseThrow(() -> new RuntimeException("Farm not found"));
-
         Field feild = fieldMapper.toEntity(feilddto) ;
+
+
+        Double farmArea = farm.getArea();
+        Double feildArea = feild.getArea();
+
+        if(feildArea>(farmArea/2)){
+            throw new RuntimeException("Feild area is greater 50% than farm area.");
+        }
+
+
         feild.setFarm(farm);
 
         Field savedfeild = fieldRepository.save(feild);
