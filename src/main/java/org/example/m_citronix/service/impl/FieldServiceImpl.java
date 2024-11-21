@@ -71,16 +71,7 @@ public class FieldServiceImpl implements FieldService {
                 .map(fieldMapper::toDto)
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public List<Feilddto> getAllFieldsInFarm(Long farmId) {
-        Farm farm = farmRepository.findById(farmId).orElseThrow(() -> new RuntimeException("Farm not found"));
-        List<Field> fields = fieldRepository.findByFarm(farm);
-        return fields.stream()
-                .map(fieldMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
+    
     @Override
     public Feilddto getField(Long id) {
         Field field = fieldRepository.findById(id).orElseThrow(()-> new RuntimeException("Field not found"));
