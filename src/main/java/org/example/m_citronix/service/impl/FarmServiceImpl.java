@@ -10,8 +10,6 @@ import org.example.m_citronix.repository.FarmSearchRepository;
 import org.example.m_citronix.service.FarmService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
