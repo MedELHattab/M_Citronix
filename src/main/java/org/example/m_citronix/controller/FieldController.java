@@ -41,5 +41,4 @@ public class FieldController {
     public ResponseEntity<List<Feilddto>> getFieldsInFarm(@PathVariable Long farmId) {
         return ResponseEntity.ok(fieldService.getAllFieldsInFarm(farmId));
     }
-
 }

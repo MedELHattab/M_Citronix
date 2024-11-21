@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface FieldRepository extends JpaRepository<Field, Long> {
     List<Field> findByFarm(Farm farm);
-    Double countByFarm(Farm farm);
+    int countByFarm(Farm farm);
 }
