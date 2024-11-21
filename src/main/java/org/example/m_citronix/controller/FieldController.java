@@ -41,4 +41,11 @@ public class FieldController {
     public ResponseEntity<List<Feilddto>> getFieldsInFarm(@PathVariable Long farmId) {
         return ResponseEntity.ok(fieldService.getAllFieldsInFarm(farmId));
     }
+
+    @PutMapping ("/{id}")
+    public ResponseEntity<Feilddto> updateField(@PathVariable Long id, @RequestBody Feilddto f) {
+        Feilddto updateField= fieldService.updateField(id, f);
+        return ResponseEntity.ok(updateField);
+    }
+
 }

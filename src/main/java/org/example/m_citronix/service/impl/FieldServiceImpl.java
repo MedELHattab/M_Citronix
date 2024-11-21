@@ -71,7 +71,7 @@ public class FieldServiceImpl implements FieldService {
                 .map(fieldMapper::toDto)
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     public Feilddto getField(Long id) {
         Field field = fieldRepository.findById(id).orElseThrow(()-> new RuntimeException("Field not found"));
@@ -96,6 +96,28 @@ public class FieldServiceImpl implements FieldService {
         }
 
         if (feilddto.getArea() != null) {
+
+            Long FarmId = existingField.getFarm().getId();
+            Farm farm = farmRepository.findById(FarmId)
+                    .orElseThrow(() -> new RuntimeException("Farm not found"));
+            Double farmArea = farm.getArea();
+            Double feildArea = feilddto.getArea();
+
+            // Calculate the total area of existing fields
+            Double totalFieldArea = fieldRepository.findByFarm(farm).stream()
+                    .mapToDouble(Field::getArea)
+                    .sum();
+
+            // Check if the new field's area exceeds 50% of the farm's area
+            if (feildArea > (farmArea / 2)) {
+                throw new RuntimeException("Field area is greater than 50% of the farm's area.");
+            }
+
+            // Check if the sum of existing areas + new field's area exceeds the farm's area
+            if (totalFieldArea + feildArea > farmArea) {
+                throw new RuntimeException("The total area of fields cannot exceed the farm's area.");
+            }
+
             existingField.setArea(feilddto.getArea());
         }
 
