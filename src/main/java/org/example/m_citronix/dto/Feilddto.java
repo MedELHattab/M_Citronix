@@ -18,6 +18,7 @@ public class Feilddto {
 
 
     @NotNull(message = "The area is required.")
+    @Min(value = 1000, message = "The area must be at least 0.1 hectares (1,000 m²).")
     private Double area;
 
     @NotNull(message = "farm is required.")

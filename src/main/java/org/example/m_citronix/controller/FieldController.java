@@ -1,6 +1,7 @@
 package org.example.m_citronix.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.m_citronix.dto.Feilddto;
 import org.example.m_citronix.service.FieldService;
@@ -32,7 +33,7 @@ public class FieldController {
     }
 
     @PostMapping
-    public ResponseEntity<Feilddto> createField(@RequestBody Feilddto f) {
+    public ResponseEntity<Feilddto> createField(@RequestBody @Valid Feilddto f) {
         return ResponseEntity.ok(fieldService.createField(f));
     }
 }
