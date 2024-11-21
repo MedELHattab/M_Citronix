@@ -25,22 +25,51 @@ public class FieldServiceImpl implements FieldService {
     public Feilddto createField(Feilddto feilddto) {
 
         Long FarmId = feilddto.getFarmId();
-        Farm farm = farmRepository.findById(FarmId).orElseThrow(() -> new RuntimeException("Farm not found"));
-        Field feild = fieldMapper.toEntity(feilddto) ;
+        Farm farm = farmRepository.findById(FarmId)
+                .orElseThrow(() -> new RuntimeException("Farm not found"));
 
+        Field feild = fieldMapper.toEntity(feilddto);
 
         Double farmArea = farm.getArea();
         Double feildArea = feild.getArea();
 
-        if(feildArea>(farmArea/2)){
-            throw new RuntimeException("Feild area is greater 50% than farm area.");
+        // Count number of fields in the farm
+        int numberOfFieldsInFarm = fieldRepository.countByFarm(farm);
+        if (numberOfFieldsInFarm >= 10) {
+            throw new RuntimeException("The number of fields in a farm cannot exceed 10.");
         }
 
+        // Calculate the total area of existing fields
+        Double totalFieldArea = fieldRepository.findByFarm(farm).stream()
+                .mapToDouble(Field::getArea)
+                .sum();
+
+        // Check if the new field's area exceeds 50% of the farm's area
+        if (feildArea > (farmArea / 2)) {
+            throw new RuntimeException("Field area is greater than 50% of the farm's area.");
+        }
+
+        // Check if the sum of existing areas + new field's area exceeds the farm's area
+        if (totalFieldArea + feildArea > farmArea) {
+            throw new RuntimeException("The total area of fields cannot exceed the farm's area.");
+        }
 
         feild.setFarm(farm);
 
-        Field savedfeild = fieldRepository.save(feild);
-        return fieldMapper.toDto(savedfeild);
+        Field savedField = fieldRepository.save(feild);
+        return fieldMapper.toDto(savedField);
+    }
+
+    @Override
+    public List<Feilddto> getAllFieldsInFarm(Long farmId) {
+        Farm farm = farmRepository.findById(farmId).orElseThrow(() -> new RuntimeException("Farm not found"));
+        List<Field> fields = fieldRepository.findByFarm(farm);
+        if (fields.isEmpty()) {
+            throw new RuntimeException("No fields found for the given farm.");
+        }
+        return fields.stream()
+                .map(fieldMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
