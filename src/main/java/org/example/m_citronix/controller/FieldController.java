@@ -36,4 +36,10 @@ public class FieldController {
     public ResponseEntity<Feilddto> createField(@RequestBody @Valid Feilddto f) {
         return ResponseEntity.ok(fieldService.createField(f));
     }
+
+    @GetMapping("/farm/{farmId}")
+    public ResponseEntity<List<Feilddto>> getFieldsInFarm(@PathVariable Long farmId) {
+        return ResponseEntity.ok(fieldService.getAllFieldsInFarm(farmId));
+    }
+
 }

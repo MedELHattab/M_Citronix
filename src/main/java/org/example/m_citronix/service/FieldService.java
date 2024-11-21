@@ -12,4 +12,5 @@ public interface FieldService {
     Feilddto updateField(Long id, Feilddto f);
     void deleteField(Long id);
     List<Feilddto> getAllFields();
+     List<Feilddto> getAllFieldsInFarm(Long farmId);
 }
