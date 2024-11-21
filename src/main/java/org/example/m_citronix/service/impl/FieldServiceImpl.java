@@ -32,6 +32,8 @@ public class FieldServiceImpl implements FieldService {
         Double farmArea = farm.getArea();
         Double feildArea = feild.getArea();
 
+        Double numberOfFieldsInFarm =fieldRepository.countByFarm(farm);
+
         if(feildArea>(farmArea/2)){
             throw new RuntimeException("Feild area is greater 50% than farm area.");
         }
@@ -41,6 +43,15 @@ public class FieldServiceImpl implements FieldService {
 
         Field savedfeild = fieldRepository.save(feild);
         return fieldMapper.toDto(savedfeild);
+    }
+
+    @Override
+    public List<Feilddto> getAllFieldsInFarm(Long farmId) {
+        Farm farm = farmRepository.findById(farmId).orElseThrow(() -> new RuntimeException("Farm not found"));
+        List<Field> fields = fieldRepository.findByFarm(farm);
+        return fields.stream()
+                .map(fieldMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
