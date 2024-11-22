@@ -30,9 +30,9 @@ public class TreeServiceImpl implements TreeService {
         int maxTrees = (int) (fieldAreaHectares * 100);
         int currentTreeCount = treeRepository.countByField(field);
 
-//        if (currentTreeCount + treeDto.getNumberOfTrees() > maxTrees) {
-//            throw new RuntimeException("Tree density exceeds the maximum allowed for the field.");
-//        }
+        if (currentTreeCount + treeDto.getNumberOfTrees() > maxTrees) {
+            throw new RuntimeException("Tree density exceeds the maximum allowed for the field.");
+        }
 
         int month = treeDto.getPlantingDate().getMonthValue();
         if (month < 3 || month > 5) {
