@@ -82,5 +82,20 @@ public class TreeServiceImpl implements TreeService {
                 .sum();
     }
 
+    @Override
+    public TreeDto getTreeById(Long treeId) {
+        Tree tree = treeRepository.findById(treeId)
+                .orElseThrow(() -> new RuntimeException("Tree not found"));
+
+        TreeDto treeDto = treeMapper.toDto(tree);
+
+        // Check productivity
+        if (tree.getAnnualProductivity() == 0) {
+            throw new RuntimeException("Tree with id " + tree.getId()+ "and age " + tree.getAge() + " should be replaced.");
+        }
+
+        return treeDto;
+    }
+
 
 }

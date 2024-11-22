@@ -9,5 +9,5 @@ public interface TreeService {
     List addTrees(TreeDto tree);
     List<TreeDto> getTreesInField(Long fieldId);
     double calculateTotalProductivity(Long fieldId);
-//    TreeDto getTreeById(Long id);
+    TreeDto getTreeById(Long id);
 }
