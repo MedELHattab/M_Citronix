@@ -17,9 +17,15 @@ public class TreeDto {
     @NotNull(message = "Planting date is required.")
     private LocalDate plantingDate;
 
+    @NotNull(message = "name is required.")
+    private String name;
+
     @NotNull(message = "Field ID is required.")
     private Long fieldId;
 
     @NotNull(message = "Number of trees is required.")
     private Integer numberOfTrees;
+
+    private int age; // New field
+    private double annualProductivity;
 }

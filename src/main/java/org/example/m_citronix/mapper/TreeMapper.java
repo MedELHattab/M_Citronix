@@ -10,6 +10,8 @@ import org.mapstruct.Mapping;
 public interface TreeMapper {
 
     @Mapping(source = "field.id", target = "fieldId")
+    @Mapping(target = "age", expression = "java(tree.getAge())")
+    @Mapping(target = "annualProductivity", expression = "java(tree.getAnnualProductivity())")
     TreeDto toDto(Tree tree);
 
     @Mapping(source = "fieldId", target = "field")
