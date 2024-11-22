@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -22,11 +24,15 @@ public class TreeServiceImpl implements TreeService {
     private final TreeMapper treeMapper;
 
     @Override
-    public List<TreeDto> addTrees(TreeDto treeDto) {
+    public List<TreeDto>    addTrees(TreeDto treeDto) {
         Field field = fieldRepository.findById(treeDto.getFieldId())
                 .orElseThrow(() -> new RuntimeException("Field not found"));
-
-        double fieldAreaHectares = field.getArea() ;
+        List<Tree> trees = new ArrayList<>();
+//        for(int i = 0; i < treeDto.getNumberOfTrees(); i++){
+//            Tree tree = treeMapper.toEntity(treeDto);
+//            System.out.println(tree );
+//        }
+        double fieldAreaHectares = field.getArea()/ 10000 ;
         int maxTrees = (int) (fieldAreaHectares * 100);
         int currentTreeCount = treeRepository.countByField(field);
 
@@ -43,6 +49,7 @@ public class TreeServiceImpl implements TreeService {
         for (int i = 0; i < treeDto.getNumberOfTrees(); i++) {
             Tree tree = treeMapper.toEntity(treeDto);
             tree.setField(field);
+            tree.setField(field);
             treesToSave.add(tree);
         }
 
@@ -57,8 +64,12 @@ public class TreeServiceImpl implements TreeService {
                 .orElseThrow(() -> new RuntimeException("Field not found"));
 
         List<Tree> trees = treeRepository.findByField(field);
-        return trees.stream().map(treeMapper::toDto).collect(Collectors.toList());
+
+        return trees.stream()
+                .map(treeMapper::toDto) // Automatically maps age and productivity
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public double calculateTotalProductivity(Long fieldId) {
@@ -70,4 +81,6 @@ public class TreeServiceImpl implements TreeService {
                 .mapToDouble(Tree::getAnnualProductivity)
                 .sum();
     }
+
+
 }

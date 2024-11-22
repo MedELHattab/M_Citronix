@@ -21,5 +21,12 @@ public class TreeController {
         return ResponseEntity.ok(treeService.addTrees(treeDto));
     }
 
+    @GetMapping("/field/{id}")
+    public ResponseEntity<List<TreeDto>> getTrees(@PathVariable Long id) {
+        List<TreeDto> trees = treeService.getTreesInField(id);
+        return ResponseEntity.ok(trees);
+    }
+
+
 
 }
