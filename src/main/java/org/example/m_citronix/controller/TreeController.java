@@ -32,6 +32,14 @@ public class TreeController {
         return ResponseEntity.ok(treeService.getTreeById(id));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTree(@PathVariable Long id) {
+        treeService.deleteTreeById(id);
+        return ResponseEntity.ok("tree deleted with success");
+    }
+
+
+
 
 
 }

@@ -53,6 +53,13 @@ public class FarmController {
     @GetMapping
     public ResponseEntity<List<Farmdto>> getAllFarms() {
         return ResponseEntity.ok(farmService.getAllFarms());
-    }   
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteField(@PathVariable Long id) {
+        farmService.deleteFarm(id);
+        return ResponseEntity.ok("Farm deleted successfully");
+    }
+
 
 }

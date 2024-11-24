@@ -26,10 +26,10 @@ public class FieldController {
         return ResponseEntity.ok(fieldService.getAllFields());
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Feilddto> deleteField(@PathVariable Long id) {
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<String> deleteField(@PathVariable Long id) {
         fieldService.deleteField(id);
-        return ResponseEntity.ok(fieldService.getField(id));
+        return ResponseEntity.ok("field deleted with success");
     }
 
     @PostMapping
@@ -47,5 +47,4 @@ public class FieldController {
         Feilddto updateField= fieldService.updateField(id, f);
         return ResponseEntity.ok(updateField);
     }
-
 }

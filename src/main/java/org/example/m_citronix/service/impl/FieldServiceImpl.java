@@ -9,6 +9,7 @@ import org.example.m_citronix.model.Field;
 import org.example.m_citronix.repository.FarmRepository;
 import org.example.m_citronix.repository.FieldRepository;
 import org.example.m_citronix.service.FieldService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
