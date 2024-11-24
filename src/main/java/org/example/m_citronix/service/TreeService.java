@@ -10,4 +10,5 @@ public interface TreeService {
     List<TreeDto> getTreesInField(Long fieldId);
     double calculateTotalProductivity(Long fieldId);
     TreeDto getTreeById(Long id);
+    void deleteTreeById(Long id);
 }
