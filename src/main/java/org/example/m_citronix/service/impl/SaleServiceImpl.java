@@ -33,7 +33,7 @@ public class SaleServiceImpl implements SaleService {
         Sale sale = saleMapper.toEntity(saleDto);
         sale.setHarvest(harvest);
 
-        sale.setQuantity(harvest.getTotalQuantity());
+         sale.setQuantity(harvest.getTotalQuantity());
 
         Sale savedSale = saleRepository.save(sale);
 
